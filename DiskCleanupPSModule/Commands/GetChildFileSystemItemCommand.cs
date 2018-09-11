@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using DiskCleanup.Internal;
 
 namespace DiskCleanup.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "ChildFileSystemItem")]
+    [Cmdlet(VerbsCommon.Get, "ChildFileSystemItem", DefaultParameterSetName = "Path")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class GetChildFileSystemItemCommand : PSCmdlet
     {
@@ -21,6 +21,9 @@ namespace DiskCleanup.Commands
         [Parameter]
         public SwitchParameter Recurse { get; set; }
 
+        [Parameter]
+        public FileAttributes AttributeFilter { get; set; }
+
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
@@ -28,30 +31,36 @@ namespace DiskCleanup.Commands
             switch (ParameterSetName)
             {
                 case "Path":
+                    if (Path == null)
+                        Path = new []{ Directory.GetCurrentDirectory() };
+
                     foreach (var path in Path)
                         if (System.IO.Path.HasExtension(path))
                             WriteObject(new FileInfo(path).ToPSObject());
                         else
-                            EnumerateFileSystemInfos(new DirectoryInfo(path), Recurse);
+                            EnumerateFileSystemInfos(new DirectoryInfo(path), Recurse, AttributeFilter);
                     break;
                 case "Pipeline":
                     foreach (var directoryInfo in InputObject)
                         if (!Recurse)
                             WriteObject(directoryInfo.ToPSObject());
                         else
-                            EnumerateFileSystemInfos(directoryInfo, Recurse);
+                            EnumerateFileSystemInfos(directoryInfo, Recurse, AttributeFilter);
                     break;                    
             }
 
 
-            void EnumerateFileSystemInfos(DirectoryInfo directoryInfo, bool recurse)
+            void EnumerateFileSystemInfos(DirectoryInfo directoryInfo, bool recurse, FileAttributes attributeFilter = default)
             {
                 try
                 {
                     foreach (var fileSystemInfo in directoryInfo.GetFileSystemInfos())
                     {
                         if (recurse && fileSystemInfo is DirectoryInfo dir)
-                            EnumerateFileSystemInfos(dir, recurse);
+                            EnumerateFileSystemInfos(dir, true, attributeFilter);
+
+                        if (attributeFilter != default && (fileSystemInfo.Attributes & attributeFilter) == 0)
+                            continue;
 
                         WriteObject(fileSystemInfo.ToPSObject());
                     }
@@ -60,18 +69,6 @@ namespace DiskCleanup.Commands
                 {
                     WriteError(e.ToErrorRecord());
                 }
-            }
-        }
-
-        private static IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(DirectoryInfo directoryInfo, bool recurse)
-        {
-            foreach (var fileSystemInfo in directoryInfo.GetFileSystemInfos())
-            {
-                if (recurse && fileSystemInfo is DirectoryInfo dir)
-                    foreach (var item in EnumerateFileSystemInfos(dir, recurse))
-                        yield return item;
-
-                yield return fileSystemInfo ;
             }
         }
     }
