@@ -26,3 +26,13 @@ This example enables NTFS compression on a single directory and all subdirectori
 $options = New-NtfsCompressionOptions -EnableCompression -Recurse -ContinueOnError
 Set-NtfsCompression -Path C:\Windows\SoftwareDistribution -Options $options -RedirectStandardError
 ```
+
+This example outputs the directory size of each user profile on the system (including hidden profiles).
+```PowerShell
+Get-UserProfile -ShowHidden | Get-FileSystemItemSize
+```
+
+This example downloads, unzips and executes CCleaner Portable with the `/Auto` command line option.
+```PowerShell
+Invoke-CCleaner -AllowDownload
+```
