@@ -15,4 +15,4 @@ Set-NtfsCompression
 
 ## Examples
 
-(throw new NotImplementedException()) :)
+`throw new NotImplementedException()` :)
