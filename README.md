@@ -39,7 +39,7 @@ This example downloads, unzips and executes CCleaner Portable with the `/Auto` c
 Invoke-CCleaner -AllowDownload
 ```
 
-This example enumerates `System.IO.FileSystemInfo` objects in the current directory that have the `System.IO.FileAttributes.Hidden` or `System.IO.FileAttributes.Archive` bit flags set.
+This example outputs the `System.IO.FileSystemInfo` objects in the current directory that have the `System.IO.FileAttributes.Hidden` or `System.IO.FileAttributes.Archive` bit flags set.
 ```PowerShell
 Get-ChildFileSystemItem -AttributeFilter 'Hidden','System'
 ```
