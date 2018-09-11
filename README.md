@@ -46,6 +46,11 @@ Get-ChildFileSystemItem -AttributeFilter 'Hidden','System'
 
 ## Installation
 
+### Temporary install (current session)
+1. Clone and build the solution
+2. Run `Import-Module "<your path here>\DiskCleanupPS.psd1"`
+
+### Permanent install (always loaded)
 1. Create a new folder in one of your `$envPSModulePath` directories (e.g. %USERPROFILE%\Documents\WindowsPowerShell\Modules or %PROGRAMFILES%\WindowsPowerShell\Modules) named DiskCleanupPS.
 2. Clone and build the solution.
 3. Copy the output files to the new module folder.
