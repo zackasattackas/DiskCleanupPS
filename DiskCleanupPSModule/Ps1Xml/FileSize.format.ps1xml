@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>FileSize</Name>
+      <ViewSelectedBy>
+        <TypeName>DiskCleanup.FileSize</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Size</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>SizeOnDisk</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <Alignment>Right</Alignment>
+                <ScriptBlock>
+                  if ($_.Size -gt 1TB) {
+                  "{0:N3} TB" -f ([double]$_.Size / 1TB)
+                  } elseif ($_.SizeOnDisk -gt 1GB) {
+                  "{0:N3} GB" -f ([double]$_.Size / 1GB)
+                  } elseif ($_.SizeOnDisk -gt 1MB) {
+                  "{0:N3} MB" -f ([double]$_.Size / 1MB)
+                  } elseif ($_.SizeOnDisk -gt 1KB) {
+                  "{0:N3} KB" -f ([double]$_.Size / 1KB)
+                  } else {
+                  "{0:N0} B" -f $_.SizeOnDisk
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Right</Alignment>
+                <ScriptBlock>
+                  if ($_.SizeOnDisk -gt 1TB) {
+                    "{0:N3} TB" -f ([double]$_.SizeOnDisk / 1TB)
+                  } elseif ($_.SizeOnDisk -gt 1GB) {
+                    "{0:N3} GB" -f ([double]$_.SizeOnDisk / 1GB)
+                  } elseif ($_.SizeOnDisk -gt 1MB) {
+                    "{0:N3} MB" -f ([double]$_.SizeOnDisk / 1MB)
+                  } elseif ($_.SizeOnDisk -gt 1KB) {
+                    "{0:N3} KB" -f ([double]$_.SizeOnDisk / 1KB)
+                  } else {
+                    "{0:N0} B" -f $_.SizeOnDisk
+                  } 
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>
+
