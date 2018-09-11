@@ -21,7 +21,7 @@ Set-NtfsCompression
 
 ## Examples
 
-This example enables NTFS compression on a single directory and all subdirectories. The standard error stream of compact.exe will be redirected to the current PS host.
+This example enables NTFS compression on a single directory and all subdirectories. The standard error stream of `compact.exe` will be redirected to the current PS host.
 ```PowerShell
 $options = New-NtfsCompressionOptions -EnableCompression -Recurse -ContinueOnError
 Set-NtfsCompression -Path C:\Windows\SoftwareDistribution -Options $options -RedirectStandardError
