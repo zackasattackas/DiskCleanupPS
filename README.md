@@ -44,6 +44,13 @@ This example outputs the `System.IO.FileSystemInfo` objects in the current direc
 Get-ChildFileSystemItem -AttributeFilter 'Hidden','System'
 ```
 
+## Installation
+
+1. Create a new folder in one of your `$envPSModulePath` directories (e.g. %USERPROFILE%\Documents\WindowsPowerShell\Modules or %PROGRAMFILES%\WindowsPowerShell\Modules) named DiskCleanupPS.
+2. Close and build the solutions.
+3. Copy the output files to the new module folder.
+4. Open a new PowerShell console or ISE host and run `Get-Command -Module DiskCleanupPS`, you should see the cmdlets listed above.
+
 ## Remarks
 
 For those already comfortable with PowerShell scripting concepts (i.e. Functions, Pipeline processing), writing a compiled cmdlet can be a great intro to the C# language, and can provide deeper insight into the PowerShell runtime. The [Windows PowerShell SDK](https://docs.microsoft.com/en-us/powershell/developer/windows-powershell) documentation has several examples to get you started, and pretty good documentation to help you along the way.
