@@ -37,6 +37,11 @@ This example downloads, unzips and executes CCleaner Portable with the `/Auto` c
 Invoke-CCleaner -AllowDownload
 ```
 
+This example enumerates `System.IO.FileSystemInfo` objects in the current directory that have the `System.IO.FileAttributes.Hidden` or `System.IO.FileAttributes.Archive` bit flags set.
+```PowerShell
+Get-ChildFileSystemItem -AttributeFilter Hidden,System
+```
+
 ## Remarks
 
 For those already comfortable with PowerShell scripting concepts (i.e. Functions, Pipeline processing), writing a compiled cmdlet can be a great intro to the C# language, and can provide deeper insight into the PowerShell runtime. The [Windows PowerShell SDK](https://docs.microsoft.com/en-us/powershell/developer/windows-powershell) documentation has several examples to get you started, and pretty good documentation to help you along the way.
