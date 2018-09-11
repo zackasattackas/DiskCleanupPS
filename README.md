@@ -1,7 +1,7 @@
 # DiskCleanupPS
 A binary PowerShell module containing cmdlets for performing various disk cleanup tasks.
 
-The target framework is .NET 3.5, so the module should work on systems with .NET 3.5 and PowerShell 2.0 or higher.
+The target framework is .NET 3.5, so the module should work on systems with .NET 3.5 and PowerShellW 2.0 or higher.
 
 ## Tested Operating Systems
 * Windows 10
@@ -36,3 +36,7 @@ This example downloads, unzips and executes CCleaner Portable with the `/Auto` c
 ```PowerShell
 Invoke-CCleaner -AllowDownload
 ```
+
+## Remarks
+
+For those already comfortable with PowerShell scripting concepts (i.e. Functions, Pipeline processing), writing a compiled cmdlet can be a great intro to the C# language, and can provide deeper insight into the PowerShell runtime. The [Windows PowerShell SDK](https://docs.microsoft.com/en-us/powershell/developer/windows-powershell) documentation has several examples to get you started, and pretty good documentation to help you along the way.
