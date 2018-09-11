@@ -80,9 +80,7 @@ namespace DiskCleanup.Commands
                                 }.ToPSObject());
                             }
                             else
-                            {
                                 WriteObject(new { Path = fileSystemInfo.FullName, Size = fileSystemInfo.GetSize() }.ToPSObject());
-                            }
                         }
                         catch (Exception e)
                         {

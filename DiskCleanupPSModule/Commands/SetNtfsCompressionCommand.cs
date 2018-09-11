@@ -7,6 +7,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 using DiskCleanup.Compression;
+using DiskCleanup.Internal;
 
 namespace DiskCleanup.Commands
 {
@@ -64,6 +65,19 @@ namespace DiskCleanup.Commands
             foreach (var path in Path)
             {
                 var fsi = System.IO.Path.HasExtension(path) ? (FileSystemInfo) new FileInfo(path) : new DirectoryInfo(path);
+
+                if (!fsi.Exists)
+                {
+                    WriteError((fsi is FileInfo ? (Exception) new FileNotFoundException("The file was not found.", fsi.FullName) : new DirectoryNotFoundException($"The directory \"{fsi.FullName}\" was not found.")).ToErrorRecord());
+                    continue;
+                }
+
+                if ((fsi.Attributes & FileAttributes.Compressed) != 0 && !Options.ForceRecompress)
+                {
+                    WriteWarning($"The file system object \"{fsi.FullName}\" already has NTFS compression enabled, and the ForceRecompress property on the NtfsCompressionOptions object was false.");
+                    continue;
+                }
+
                 var ntfsCompress = new NtfsCompress(fsi, Options);
                 
                 if (Path.Length == 1)
@@ -177,7 +191,7 @@ namespace DiskCleanup.Commands
             if (string.IsNullOrEmpty(e.Data))
                 return;
 
-            Host.UI.WriteErrorLine(e.Data.Trim());            
+            Host.UI.WriteWarningLine(e.Data.Trim());            
         }
 
         private void NtfsCompressOnOutputDataReceived(object sender, DataReceivedEventArgs e)

@@ -36,11 +36,16 @@ namespace DiskCleanup.Commands
             {
                 case "Path":
                     if (Path == null)
-                        Path = new []{ SessionState.Path.CurrentFileSystemLocation.Path };
+                        Path = new[] {SessionState.Path.CurrentFileSystemLocation.Path};
 
                     foreach (var path in Path)
                         if (System.IO.Path.HasExtension(path))
-                            WriteObject(new FileInfo(path).ToPSObject());
+                            if (!File.Exists(path))
+                                WriteError(new FileNotFoundException("The file does not exist.", path).ToErrorRecord());
+                            else
+                                WriteObject(new FileInfo(path).ToPSObject());
+                        else if (!Directory.Exists(path))
+                            WriteError(new DirectoryNotFoundException("The directory does not exist.").ToErrorRecord());
                         else
                             EnumerateFileSystemInfos(new DirectoryInfo(path), Recurse, AttributeFilter);
                     break;
@@ -50,7 +55,7 @@ namespace DiskCleanup.Commands
                             WriteObject(directoryInfo.ToPSObject());
                         else
                             EnumerateFileSystemInfos(directoryInfo, Recurse, AttributeFilter);
-                    break;                    
+                    break;
             }
 
 
@@ -64,7 +69,6 @@ namespace DiskCleanup.Commands
                             EnumerateFileSystemInfos(dir, true, attributeFilter);
 
                         if (attributeFilter != default)
-                        {
                             switch (FilterOption)
                             {
                                 case "Include":
@@ -84,7 +88,6 @@ namespace DiskCleanup.Commands
                                         continue;
                                     break;
                             }
-                        }
 
                         WriteObject(fileSystemInfo.ToPSObject());
                     }
