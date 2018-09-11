@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DiskCleanup</RootNamespace>
-    <AssemblyName>DiskCleanupPSModule</AssemblyName>
+    <AssemblyName>DiskCleanup.Commands</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -63,7 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DiskCleanupPSModule.psd1">
+    <None Include="DiskCleanupPS.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Ps1Xml\FileSize.format.ps1xml">
