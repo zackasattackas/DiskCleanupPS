@@ -24,6 +24,10 @@ namespace DiskCleanup.Commands
         [Parameter]
         public FileAttributes AttributeFilter { get; set; }
 
+        [Parameter]
+        [ValidateSet("Include", "Exclude", "IncludeAny", "ExcludeAny")]
+        public string FilterOption { get; set; } = "IncludeAny";
+
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
@@ -32,7 +36,7 @@ namespace DiskCleanup.Commands
             {
                 case "Path":
                     if (Path == null)
-                        Path = new []{ Directory.GetCurrentDirectory() };
+                        Path = new []{ SessionState.Path.CurrentFileSystemLocation.Path };
 
                     foreach (var path in Path)
                         if (System.IO.Path.HasExtension(path))
@@ -59,8 +63,28 @@ namespace DiskCleanup.Commands
                         if (recurse && fileSystemInfo is DirectoryInfo dir)
                             EnumerateFileSystemInfos(dir, true, attributeFilter);
 
-                        if (attributeFilter != default && (fileSystemInfo.Attributes & attributeFilter) == 0)
-                            continue;
+                        if (attributeFilter != default)
+                        {
+                            switch (FilterOption)
+                            {
+                                case "Include":
+                                    if ((fileSystemInfo.Attributes & attributeFilter) != attributeFilter)
+                                        continue;
+                                    break;
+                                case "Exclude":
+                                    if ((fileSystemInfo.Attributes & attributeFilter) == attributeFilter)
+                                        continue;
+                                    break;
+                                case "IncludeAny":
+                                    if ((fileSystemInfo.Attributes & attributeFilter) == 0)
+                                        continue;
+                                    break;
+                                case "ExcludeAny":
+                                    if ((fileSystemInfo.Attributes & attributeFilter) != 0)
+                                        continue;
+                                    break;
+                            }
+                        }
 
                         WriteObject(fileSystemInfo.ToPSObject());
                     }

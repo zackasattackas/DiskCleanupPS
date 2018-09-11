@@ -43,7 +43,7 @@ namespace DiskCleanup.Commands
                                 var directorySize = directoryInfo.GetSize(true, WriteScanProgress);
 
                                 if (directorySize.Inaccessible > 0)
-                                    WriteWarning($"{directorySize.Inaccessible} subdirector{(directorySize.Inaccessible > 0 ? "ies" : "y")} of \"{path}\" could not be accessed.");
+                                    WriteWarning($"{directorySize.Inaccessible} subdirector{(directorySize.Inaccessible > 1 ? "ies" : "y")} of \"{path}\" could not be accessed.");
 
                                 WriteObject(new
                                 {
