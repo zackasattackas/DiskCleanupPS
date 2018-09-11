@@ -20,8 +20,10 @@ Set-NtfsCompression
 ```
 
 ## Examples
+I have yet to write the PowerShell help documentation for each cmdlet, but the following examples and source code should give you a good idea of how each cmdlet works and what they return.
 
-This example enables NTFS compression on a single directory and all subdirectories. The standard error stream of `compact.exe` will be redirected to the current PS host.
+
+#### This example enables NTFS compression on a single directory and all subdirectories. The standard error stream of `compact.exe` will be redirected to the current PS host.
 ```PowerShell
 $options = New-NtfsCompressionOptions -EnableCompression -Recurse -ContinueOnError
 Set-NtfsCompression -Path C:\Windows\SoftwareDistribution -Options $options -RedirectStandardError
