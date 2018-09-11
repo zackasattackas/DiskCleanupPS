@@ -66,7 +66,7 @@ namespace DiskCleanup.Commands
                 "Downloading CCleaner Portable...",
                 $"Size: {new FileSize(streamSize, streamSize)}   " +
                 $"Downloaded: {new FileSize(bytesDownloaded, bytesDownloaded)}   " +
-                $"Speed: {(double)bytesDownloaded / 125000 / _downloadTimer.Elapsed.TotalSeconds:N2} Mb/s")
+                $"Speed: {(double )bytesDownloaded / 131072 / _downloadTimer.Elapsed.TotalSeconds:N2} Mb/s")
             {
                 PercentComplete = (int) ((double) bytesDownloaded / streamSize * 100)
             });

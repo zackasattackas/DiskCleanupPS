@@ -30,7 +30,7 @@ namespace DiskCleanup.Commands
         {
             base.ProcessRecord();
 
-            WriteObject(new CompressionOptions
+            WriteObject(new NtfsCompressionOptions
             {
                 ContinueOnError = ContinueOnError,
                 EnableCompression = EnableCompression,

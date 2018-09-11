@@ -18,7 +18,7 @@ namespace DiskCleanup.Commands
 
         private static readonly object SyncObject = new object();
         private string _compactOutput;
-        private List<CompressionThread> _compressionThreads;        
+        private List<NtfsCompressionThread> _compressionThreads;        
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace DiskCleanup.Commands
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string[] Path { get; set; }
 
-        [Parameter(Position = 1, Mandatory = true)] public CompressionOptions Options { get; set; }
+        [Parameter(Position = 1, Mandatory = true)] public NtfsCompressionOptions Options { get; set; }
 
         [Parameter]
         public TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(System.Threading.Timeout.Infinite);
@@ -59,7 +59,7 @@ namespace DiskCleanup.Commands
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-            _compressionThreads = new List<CompressionThread>();
+            _compressionThreads = new List<NtfsCompressionThread>();
 
             foreach (var path in Path)
             {
@@ -72,7 +72,7 @@ namespace DiskCleanup.Commands
                 if (RedirectStandardError)
                     ntfsCompress.ErrorDataReceived += NtfsCompressOnErrorDataReceived;
 
-                _compressionThreads.Add(new CompressionThread(ntfsCompress, ntfsCompress.BeginCompress(Timeout, TerminateOnTimeout, null, null)));
+                _compressionThreads.Add(new NtfsCompressionThread(ntfsCompress, ntfsCompress.BeginCompress(Timeout, TerminateOnTimeout, null, null)));
             }        
 
             ThreadPool.QueueUserWorkItem(ProgressThreadProc);

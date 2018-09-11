@@ -49,10 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CCleaner.cs" />
-    <Compile Include="Compression\CompressionOptions.cs" />
+    <Compile Include="Compression\NtfsCompressionOptions.cs" />
     <Compile Include="Compression\NtfsCompress.cs" />
-    <Compile Include="Compression\CompressionResult.cs" />
-    <Compile Include="Compression\CompressionThread.cs" />
+    <Compile Include="Compression\NtfsCompressionResult.cs" />
+    <Compile Include="Compression\NtfsCompressionThread.cs" />
     <Compile Include="DirectorySize.cs" />
     <Compile Include="DiskCleanupException.cs" />
     <Compile Include="Extensions.cs" />

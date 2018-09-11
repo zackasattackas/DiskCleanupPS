@@ -19,7 +19,7 @@ namespace diskcleaner
 
             var ntfsCompress = new NtfsCompress(
                 new DirectoryInfo("C:\\windows\\SoftwareDistribution"),
-                new CompressionOptions {EnableCompression = true, ContinueOnError = true, Recurse = true});
+                new NtfsCompressionOptions {EnableCompression = true, ContinueOnError = true, Recurse = true});
 
             //ntfsCompress.Compress(ref cancel);
 

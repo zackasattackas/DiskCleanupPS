@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\GetFileSystemInfoCommand.cs" />
+    <Compile Include="Commands\GetChildFileSystemItemCommand.cs" />
     <Compile Include="Commands\GetFileSystemItemSize.cs" />
     <Compile Include="Commands\GetUserProfileCommand.cs" />
     <Compile Include="Commands\NewNtfsCompressionOptions.cs" />

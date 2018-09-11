@@ -7,22 +7,19 @@ using DiskCleanup.Internal;
 
 namespace DiskCleanup.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "FileSystemInfo")]
+    [Cmdlet(VerbsCommon.Get, "ChildFileSystemItem")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class GetFileSystemInfoCommand : PSCmdlet
+    public class GetChildFileSystemItemCommand : PSCmdlet
     {
         [Parameter(ParameterSetName = "Path")]
         public string[] Path { get; set; }
 
         [Parameter(ValueFromPipeline = true)]
-        [Parameter(ParameterSetName = "Pipeling")]
+        [Parameter(ParameterSetName = "Pipeline")]
         public DirectoryInfo[] InputObject { get; set; }
 
         [Parameter]
         public SwitchParameter Recurse { get; set; }
-
-        [Parameter]
-        public SwitchParameter Force { get; set; }
 
         protected override void ProcessRecord()
         {
@@ -61,7 +58,7 @@ namespace DiskCleanup.Commands
                 }
                 catch (Exception e) when(e is UnauthorizedAccessException || e is IOException)
                 {
-                    // ignore
+                    WriteError(e.ToErrorRecord());
                 }
             }
         }

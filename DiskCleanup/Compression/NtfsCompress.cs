@@ -10,7 +10,7 @@ namespace DiskCleanup.Compression
     {
         #region Fields
 
-        private delegate CompressionResult CompressionProcedure(TimeSpan timeout, bool terminateOnTimeout);
+        private delegate NtfsCompressionResult CompressionProcedure(TimeSpan timeout, bool terminateOnTimeout);
         private CompressionProcedure _asyncDelegate;
         private int _syncPoint;
         private bool _cancel;
@@ -20,7 +20,7 @@ namespace DiskCleanup.Compression
         #region Properties
 
         public FileSystemInfo FileSystemInfo { get; set; }
-        public CompressionOptions Options { get; set; }
+        public NtfsCompressionOptions Options { get; set; }
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace DiskCleanup.Compression
 
         #region Ctor
 
-        public NtfsCompress(FileSystemInfo fileSystemInfo, CompressionOptions options)
+        public NtfsCompress(FileSystemInfo fileSystemInfo, NtfsCompressionOptions options)
         {
             FileSystemInfo = fileSystemInfo;
             Options = options;
@@ -43,7 +43,7 @@ namespace DiskCleanup.Compression
 
         #region Methods
 
-        public CompressionResult Compress(TimeSpan timeout, bool terminateOnTimeout)
+        public NtfsCompressionResult Compress(TimeSpan timeout, bool terminateOnTimeout)
         {
             if (Interlocked.CompareExchange(ref _syncPoint, 1, 0)  != 0) 
                 throw new DiskCleanupException("Another compression operation is currently in progress. The NtfsCompress object is not reentrant.");
@@ -99,7 +99,7 @@ namespace DiskCleanup.Compression
                         stopwatch.Stop();
 
                         if (proc.HasExited)
-                            return new CompressionResult(preCompressionSize, FileSystemInfo.GetSize());
+                            return new NtfsCompressionResult(preCompressionSize, FileSystemInfo.GetSize());
 
                         if (terminateOnTimeout)
                             proc.Kill();
@@ -114,7 +114,7 @@ namespace DiskCleanup.Compression
                         Thread.Sleep(250);
 
                     if (proc.HasExited)
-                        return new CompressionResult(preCompressionSize, FileSystemInfo.GetSize());
+                        return new NtfsCompressionResult(preCompressionSize, FileSystemInfo.GetSize());
 
                     proc.Kill();
 
@@ -134,7 +134,7 @@ namespace DiskCleanup.Compression
             return _asyncDelegate.BeginInvoke(timeout, terminateOnTimeout, callback, state);
         }
 
-        public CompressionResult EndCompress(bool cancel, IAsyncResult asyncResult)
+        public NtfsCompressionResult EndCompress(bool cancel, IAsyncResult asyncResult)
         {
             _cancel = cancel;
             return _asyncDelegate.EndInvoke(asyncResult);

@@ -2,11 +2,11 @@
 
 namespace DiskCleanup.Compression
 {
-    public class CompressionThread
+    public class NtfsCompressionThread
     {
         public NtfsCompress NtfsCompress { get; set; }
         public IAsyncResult AsyncResult { get; set; }
-        public CompressionThread(NtfsCompress ntfsCompress, IAsyncResult asyncResult)
+        public NtfsCompressionThread(NtfsCompress ntfsCompress, IAsyncResult asyncResult)
         {
             NtfsCompress = ntfsCompress;
             AsyncResult = asyncResult;

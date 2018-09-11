@@ -1,6 +1,6 @@
 ﻿namespace DiskCleanup.Compression
 {
-    public class CompressionOptions
+    public class NtfsCompressionOptions
     {
         public bool EnableCompression { get; set; }
         public bool Recurse { get; set; }
