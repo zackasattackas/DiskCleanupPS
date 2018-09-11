@@ -14,3 +14,5 @@ Set-NtfsCompression
 ```
 
 ## Examples
+
+(throw new NotImplementedException()) :)
