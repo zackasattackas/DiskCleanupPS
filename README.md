@@ -1,7 +1,7 @@
 # DiskCleanupPS
 A binary PowerShell module containing cmdlets for performing various disk cleanup tasks.
 
-The target framework is .NET 3.5, so the module should work on systems with .NET 3.5 and PowerShellW 2.0 or higher.
+The target framework is .NET 3.5, so the module should work on systems with .NET 3.5 and PowerShell 2.0 or higher.
 
 ## Tested Operating Systems
 * Windows 10
