@@ -20,6 +20,14 @@ namespace DiskCleanup
             return left;
         }
 
+        public static FileSize operator -(FileSize left, FileSize right)
+        {
+            left.Bytes -= right.Bytes;
+            left.BytesOnDisk -= right.BytesOnDisk;
+
+            return left;
+        }
+
         public FileSize(long bytes, long bytesOnDisk) : this()
         {
             Bytes = bytes;
@@ -48,23 +56,24 @@ namespace DiskCleanup
         {
             double value;
             string unit;
+            var absolute = Math.Abs(size);
 
-            if (size >= OneTerabyte)
+            if (absolute >= OneTerabyte)
             {
                 value = (double)size / OneTerabyte;
                 unit = "TB";
             }
-            else if(size >= OneGigabyte)
+            else if(absolute >= OneGigabyte)
             {
                 value = (double)size / OneGigabyte;
                 unit = "GB";
             }
-            else if (size >= OneMegabyte)
+            else if (absolute >= OneMegabyte)
             {
                 value = (double)size / OneMegabyte;
                 unit = "MB";
             }
-            else if (size >= OneKilobyte)
+            else if (absolute >= OneKilobyte)
             {
                 value = (double)size / OneKilobyte;
                 unit = "KB";

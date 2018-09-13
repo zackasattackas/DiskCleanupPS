@@ -72,7 +72,7 @@ namespace DiskCleanup.Commands
                     continue;
                 }
 
-                if ((fsi.Attributes & FileAttributes.Compressed) != 0 && !Options.ForceRecompress)
+                if ((fsi.Attributes & FileAttributes.Compressed) != 0 && Options.EnableCompression && !Options.ForceRecompress)
                 {
                     WriteWarning($"The file system object \"{fsi.FullName}\" already has NTFS compression enabled, and the ForceRecompress property on the NtfsCompressionOptions object was false.");
                     continue;
