@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using DiskCleanup.Internal;
+using static System.IO.Path;
 
 namespace DiskCleanup.Commands
 {
@@ -39,7 +39,7 @@ namespace DiskCleanup.Commands
                         Path = new[] {SessionState.Path.CurrentFileSystemLocation.Path};
 
                     foreach (var path in Path)
-                        if (System.IO.Path.HasExtension(path))
+                        if (HasExtension(path) && Directory.GetParent(path).Name.ToLower() != "users") // Fix for systems where there are accounts like 'administrator' and 'administrator.domainName'
                             if (!File.Exists(path))
                                 WriteError(new FileNotFoundException("The file does not exist.", path).ToErrorRecord());
                             else
