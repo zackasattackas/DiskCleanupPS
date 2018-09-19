@@ -50,6 +50,7 @@
     <Compile Include="Commands\GetFileSystemItemSize.cs" />
     <Compile Include="Commands\GetUserProfileCommand.cs" />
     <Compile Include="Commands\NewNtfsCompressionOptions.cs" />
+    <Compile Include="Commands\RemoveRecycleBinContentCommand.cs" />
     <Compile Include="Commands\RemoveTempFilesCommand.cs" />
     <Compile Include="Commands\SetNtfsCompressionCommand.cs" />
     <Compile Include="Commands\TempFileScope.cs" />

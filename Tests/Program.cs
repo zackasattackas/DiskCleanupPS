@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using DiskCleanup;
 using DiskCleanup.Compression;
 
 namespace diskcleaner
@@ -10,6 +11,8 @@ namespace diskcleaner
     {
         private static void Main(string[] args)
         {
+            RecycleBin.Empty();
+
             var cancel = 0;
             Console.CancelKeyPress += (sender, eventArgs) =>
             {
